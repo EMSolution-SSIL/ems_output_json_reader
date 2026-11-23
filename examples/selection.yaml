@@ -1,0 +1,9 @@
+exports:
+  - post: forceNodal
+    group: forceNodalData
+    ids: [rotor]
+    fields: [forceMZ]
+  - post: network
+    group: networkData
+    ids: [1, 2, 3]
+    fields: [current, voltage, flux]

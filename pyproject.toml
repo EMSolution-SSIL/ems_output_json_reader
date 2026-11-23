@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "emso-post"
+version = "0.1.0"
+description = "Read, export, and plot EMSolution output.json post data"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [{name = "Science Solutions International Laboratory, Inc."}]
+keywords = ["EMSolution", "post-processing", "JSON", "CSV", "electromagnetics"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Scientific/Engineering",
+]
+dependencies = ["PyYAML>=6"]
+
+[project.urls]
+Homepage = "https://github.com/EMSolution-SSIL/ems_output_json_reader"
+Repository = "https://github.com/EMSolution-SSIL/ems_output_json_reader"
+Issues = "https://github.com/EMSolution-SSIL/ems_output_json_reader/issues"
+
+[project.optional-dependencies]
+plot = ["matplotlib>=3.7"]
+
+[project.scripts]
+emso-post = "emso_post.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["emso_post*"]

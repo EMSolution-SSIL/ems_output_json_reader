@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+.venv/
+build/
+dist/
+*.egg-info/
+post_csv/
+.vscode/
+
+# Local EMSolution producer copies, sample results, and early experiments.
+/EMSOJson.cpp
+/EMSOJson.h
+/output*.json
+/*.csv
+/read_emsojson.py
+/read_emsojson_motor.py
+/read_emsojson_motor.zip
+/dq_trans.py
+
+# Internal working plan includes machine-specific paths.
+/IMPLEMENTATION_PLAN.md
