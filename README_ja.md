@@ -4,6 +4,15 @@
 
 EMSolution の `output.json` に含まれるポストデータを CSV に出力し、独立した画面で二次元グラフを表示する Python ツールです。現時点では `convergence_history.json` と `mesh_info.json` は対象外です。
 
+## 関連リポジトリ
+
+| リポジトリ | 用途 | ライセンス |
+| --- | --- | --- |
+| [EMSolution input.json チェッカー](https://github.com/EMSolution-SSIL/ems_input_json_reader) | 実行前の入力設定を静的に検査する `emso-input`。 | PolyForm Perimeter 1.0.1（ソース公開） |
+| [EMSolution output.json リーダー](https://github.com/EMSolution-SSIL/ems_output_json_reader) | ポスト結果をCSV出力・グラフ表示する `emso-post`。 | MIT |
+
+二つは独立した Python パッケージです。用途に応じて必要なものをインストールしてください。
+
 ## インストール
 
 Python 3.10 以降を用意し、このフォルダで次を実行します。
