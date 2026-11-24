@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from .core import OutputData, PostSeries
+from .core import GROUPS, OutputData, PostSeries
 
 
 class SelectionError(ValueError):
@@ -43,11 +43,11 @@ def _id_matches(series: PostSeries, selector: Any) -> bool:
         if not selector or any(not isinstance(key, str) for key in selector):
             return False
         identity = dict(series.identity)
-        return set(selector) == set(identity) and all(
+        return set(selector).issubset(identity) and all(
             type(selector[key]) is type(identity[key]) and selector[key] == identity[key]
             for key in selector
         )
-    if len(series.identity) != 1:
+    if len(GROUPS[series.post][series.group].ids) != 1:
         return False
     value = series.identity[0][1]
     return type(selector) is type(value) and selector == value

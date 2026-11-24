@@ -72,7 +72,7 @@ paths = export_csv(output, "results", selection)
 
 ## 対応範囲と検証
 
-現行の EMSolution 生成コード `src/post/post_files/EMSOJson.cpp` にある `output.json` の14種類のポストデータを対象にしています。実サンプルで確認済みなのは `network` と `forceNodal` です。他の種類は生成コードに基づくテスト JSON で検証しています。`network.convertedData`、`forceNodal.forceNodalExtendData`、`heat.sourceHeatData` も対象です。
+現行の EMSolution 生成コード `src/post/post_files/EMSOJson.cpp` にある `output.json` の14種類のポストデータを対象にしています。`../reader_json_files/results` の実データ240件はすべて読み込めました。221件は全値を時系列として登録でき、18件はキーがあっても値が生成されておらず、1件は正常なMESHの空間値です。2026.09.2のComplexPermeabilityの既知バグとMESHのジオメトリ点の値もレポートに記録しました。時系列に登録しない項目の位置は `output.unindexed` に記録し、元の値は `output.raw` に保持します。詳細は[検証レポート](VALIDATION_REPORT.md)を参照してください。同じ ID が複数ある場合は `recordNo` で区別し、YAML では元の ID でまとめて選択できます。`network.convertedData`、`forceNodal.forceNodalExtendData`、`heat.sourceHeatData` も対象です。
 
 未知のポストデータ、未対応のデータ群、時系列の長さの不一致があれば、黙って欠落させずエラーにします。新しい EMSolution 出力形式に対応する際は、まず `emso_post/core.py` の定義とテストを更新してください。
 
@@ -80,6 +80,9 @@ paths = export_csv(output, "results", selection)
 
 ```powershell
 python -m unittest discover -s tests -v
+python tests/run_corpus.py --root ../reader_json_files --report build/corpus_report.json
 ```
+
+コーパス用スクリプトは各ファイルの判定を JSON レポートに保存します。終了コードは全件読み込め、時系列に登録しない値が「出力なし」または正常なMESHの空間値と分類できた場合に0、読み込み・解析エラーがあれば1、分類できない値が残れば2です。後者を許容する場合は `--allow-incomplete` を指定できます。実データはパッケージに含めません。
 
 従来の `read_emsojson_motor.py` と `dq_trans.py` はモータ固有の試作スクリプトとして残しています。汎用 CLI はこれらを実行しません。

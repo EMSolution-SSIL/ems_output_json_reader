@@ -1,6 +1,6 @@
 # Roadmap
 
-The initial `output.json` reader, CSV exporter, and standalone plotter are implemented in version 0.1.0. `network` and `forceNodal` are also checked against local solver output. The other post-data groups have synthetic tests derived from the current EMSolution JSON producer; real output samples will be checked as they become available.
+The initial `output.json` reader, CSV exporter, and standalone plotter were implemented in version 0.1.0. The version 0.1.1 validation corpus covers 240 solver outputs: all load, 221 are fully indexed as time series, 18 have no produced values for some keys, and one has valid MESH spatial values. No unclassified values remain. Synthetic tests derived from the producer cover all 14 post-data types.
 
 Future work:
 

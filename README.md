@@ -73,13 +73,16 @@ paths = export_csv(output, "results", selection)
 
 The reader recognizes the 14 post-data types written by the current EMSolution `src/post/post_files/EMSOJson.cpp`, including the producer's `electriccEnergy` spelling and `demagRatio`. It also recognizes optional `network.convertedData`, `forceNodal.forceNodalExtendData`, and `heat.sourceHeatData` groups. Unknown post-data types, unsupported array groups, and inconsistent time-series lengths fail explicitly instead of being silently dropped.
 
-`network` and `forceNodal` have been checked against local solver outputs. The other types are tested with small synthetic JSON objects derived from the current producer. No customer model or full solver result is included in this repository.
+The validation corpus in `../reader_json_files/results` contains 240 outputs. All 240 load successfully: 221 have every value indexed as a time series, 18 have keys without produced values, and one has valid MESH spatial values. The JSON corpus report identifies the 2026.09.2 ComplexPermeability bug and the MESH geometry-point output. These values are listed in `output.unindexed`, while `output.raw` retains the original JSON. Repeated IDs get a `recordNo` identity, and YAML may select all such records by their original ID. See [the validation report](VALIDATION_REPORT.md). No validation model or full solver result is included in this repository.
 
 Run the tests with:
 
 ```sh
 python -m unittest discover -s tests -v
+python tests/run_corpus.py --root ../reader_json_files --report build/corpus_report.json
 ```
+
+The corpus script writes a per-file JSON report. Exit code 0 means every file was read and any unindexed values were classified as absent results or valid MESH spatial data; 1 means a file could not be read or parsed; 2 means an unclassified unindexed value remains. Use `--allow-incomplete` when such values are acceptable. The corpus itself is kept outside the package.
 
 The old motor-specific experimental scripts are intentionally outside this distributable package. See the [roadmap](ROADMAP.md) for convergence and mesh data support.
 
